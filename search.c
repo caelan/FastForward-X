@@ -89,7 +89,7 @@ Bool ltakeA;
 
 /* in agenda driven algorithm, the current set of goals is this
  */
-State lcurrent_goals;
+State lcurrent_goals_search;
 
 
 
@@ -187,8 +187,8 @@ Bool do_enforced_hill_climbing( State *start, State *end )
     make_state( &S_, gnum_ft_conn );
     S_.max_F = gnum_ft_conn;
 
-    make_state( &lcurrent_goals, gnum_ft_conn );
-    lcurrent_goals.max_F = gnum_ft_conn;
+    make_state( &lcurrent_goals_search, gnum_ft_conn );
+    lcurrent_goals_search.max_F = gnum_ft_conn;
 
     first_call = FALSE;
   }
@@ -196,10 +196,10 @@ Bool do_enforced_hill_climbing( State *start, State *end )
   /* start enforced Hill-climbing
    */
 
-  source_to_dest( &lcurrent_goals, end );  
+  source_to_dest( &lcurrent_goals_search, end );  
 
   source_to_dest( &S, start );
-  h = get_1P_and_H( &S, &lcurrent_goals );
+  h = get_1P_and_H( &S, &lcurrent_goals_search );
 
   if ( h == INFINITY ) {
     return FALSE;
@@ -381,7 +381,7 @@ int expand_first_node( int h )
     fc = FALSE;
   }
 
-  h_ = get_1P_and_H( &(lehc_current_start->S), &lcurrent_goals );
+  h_ = get_1P_and_H( &(lehc_current_start->S), &lcurrent_goals_search );
     
   if ( h_ == INFINITY ) {
     lehc_current_start = lehc_current_start->next;
